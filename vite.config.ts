@@ -5,8 +5,9 @@ import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "les-ndoles.onrender.com",
+    host: "::",
     port: 8080,
+    allowedHosts: ["les-ndoles.onrender.com"],
   },
   plugins: [
     react()
