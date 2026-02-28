@@ -59,6 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({
               <span className="text-white font-bold text-lg tracking-tight">Les</span>
               <span className="text-[#FCD116] font-bold text-lg">Ndolés</span>
               <span className="text-[#006633] text-xs block -mt-1 font-medium tracking-wider">CAMEROUN</span>
+              <span className="text-white font-bold text-sm tracking-tight">FootPro</span>
             </div>
           </div>
 
