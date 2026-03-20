@@ -1,11 +1,11 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from "@/lib/supabase";
 
 // Generate a unique session ID for anonymous view tracking
 export function getViewSessionId(): string {
-  let sessionId = sessionStorage.getItem('video_session_id');
+  let sessionId = sessionStorage.getItem("video_session_id");
   if (!sessionId) {
     sessionId = `vs_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
-    sessionStorage.setItem('video_session_id', sessionId);
+    sessionStorage.setItem("video_session_id", sessionId);
   }
   return sessionId;
 }
@@ -65,11 +65,13 @@ export interface MostWatchedData {
 }
 
 // Record a new video view
-export async function recordVideoView(record: VideoViewRecord): Promise<string | null> {
+export async function recordVideoView(
+  record: VideoViewRecord,
+): Promise<string | null> {
   try {
-    const { data, error } = await supabase.functions.invoke('video-analytics', {
+    const { data, error } = await supabase.functions.invoke("video-analytics", {
       body: {
-        action: 'record_view',
+        action: "record_view",
         player_id: record.playerId,
         session_id: record.sessionId,
         viewer_id: record.viewerId || null,
@@ -81,13 +83,13 @@ export async function recordVideoView(record: VideoViewRecord): Promise<string |
     });
 
     if (error) {
-      console.error('Error recording video view:', error);
+      console.error("Error recording video view:", error);
       return null;
     }
 
     return data?.view?.id || null;
   } catch (err) {
-    console.error('Error recording video view:', err);
+    console.error("Error recording video view:", err);
     return null;
   }
 }
@@ -97,12 +99,12 @@ export async function updateVideoView(
   playerId: string,
   sessionId: string,
   watchDurationSeconds: number,
-  totalDurationSeconds: number
+  totalDurationSeconds: number,
 ): Promise<boolean> {
   try {
-    const { error } = await supabase.functions.invoke('video-analytics', {
+    const { error } = await supabase.functions.invoke("video-analytics", {
       body: {
-        action: 'update_view',
+        action: "update_view",
         player_id: playerId,
         session_id: sessionId,
         watch_duration_seconds: watchDurationSeconds,
@@ -117,11 +119,13 @@ export async function updateVideoView(
 }
 
 // Get analytics for a specific player
-export async function fetchPlayerViewAnalytics(playerId: string): Promise<PlayerViewAnalytics | null> {
+export async function fetchPlayerViewAnalytics(
+  playerId: string,
+): Promise<PlayerViewAnalytics | null> {
   try {
-    const { data, error } = await supabase.functions.invoke('video-analytics', {
+    const { data, error } = await supabase.functions.invoke("video-analytics", {
       body: {
-        action: 'get_player_views',
+        action: "get_player_views",
         player_id: playerId,
       },
     });
@@ -142,37 +146,54 @@ export async function fetchPlayerViewAnalytics(playerId: string): Promise<Player
 }
 
 // Get most watched leaderboard
-export async function fetchMostWatched(limit: number = 10): Promise<MostWatchedData> {
+export async function fetchMostWatched(
+  limit: number = 10,
+): Promise<MostWatchedData> {
   try {
-    const { data, error } = await supabase.functions.invoke('video-analytics', {
+    const { data, error } = await supabase.functions.invoke("video-analytics", {
       body: {
-        action: 'get_most_watched',
+        action: "get_most_watched",
         limit,
       },
     });
 
     if (error || !data) {
-      return { leaderboard: [], platformStats: { totalViews: 0, totalWatchTimeSeconds: 0, uniquePlayersWatched: 0 } };
+      return {
+        leaderboard: [],
+        platformStats: {
+          totalViews: 0,
+          totalWatchTimeSeconds: 0,
+          uniquePlayersWatched: 0,
+        },
+      };
     }
 
     return {
       leaderboard: data.leaderboard || [],
       platformStats: {
         totalViews: data.platform_stats?.total_views || 0,
-        totalWatchTimeSeconds: data.platform_stats?.total_watch_time_seconds || 0,
+        totalWatchTimeSeconds:
+          data.platform_stats?.total_watch_time_seconds || 0,
         uniquePlayersWatched: data.platform_stats?.unique_players_watched || 0,
       },
     };
   } catch {
-    return { leaderboard: [], platformStats: { totalViews: 0, totalWatchTimeSeconds: 0, uniquePlayersWatched: 0 } };
+    return {
+      leaderboard: [],
+      platformStats: {
+        totalViews: 0,
+        totalWatchTimeSeconds: 0,
+        uniquePlayersWatched: 0,
+      },
+    };
   }
 }
 
 // Get view counts for all players (lightweight, for cards)
 export async function fetchAllViewCounts(): Promise<Record<string, number>> {
   try {
-    const { data, error } = await supabase.functions.invoke('video-analytics', {
-      body: { action: 'get_all_view_counts' },
+    const { data, error } = await supabase.functions.invoke("video-analytics", {
+      body: { action: "get_all_view_counts" },
     });
 
     if (error || !data) return {};

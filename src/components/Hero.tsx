@@ -66,7 +66,8 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               <div className="w-3 h-3 rounded-full bg-[#FCD116]" />
             </div>
             <span className="text-[#FCD116] text-sm font-medium tracking-wide">
-              Les Camerounais méritent d'être vus.
+              {t('hero.label')}
+             
             </span>
           </div>
 

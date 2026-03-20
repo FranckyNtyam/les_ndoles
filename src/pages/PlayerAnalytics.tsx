@@ -955,11 +955,11 @@ const PlayerAnalyticsContent: React.FC = () => {
               <Globe className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-sm">
-              Lions<span className="text-[#FCD116]">Talent</span>
+              Les<span className="text-[#FCD116]">Ndolés</span>
             </span>
           </Link>
           <p className="text-gray-600 text-xs">
-            &copy; 2026 LionsTalent Cameroun. {lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}
+            &copy; 2026 LesNdolés Cameroun. {lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}
           </p>
         </div>
       </footer>

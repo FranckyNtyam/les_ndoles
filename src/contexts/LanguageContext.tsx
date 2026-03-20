@@ -18,6 +18,7 @@ const translations: Translations = {
   'nav.trending': { fr: 'Tendances', en: 'Trending' },
 
   // Hero
+  'hero.label':{fr: "Les Camerounais méritent d'être vus.", en: 'Cameroonians deserve to be seen.'},
   'hero.title': { fr: "L'Avenir du Football Camerounais", en: 'The Future of Cameroonian Football' },
   'hero.subtitle': { fr: 'Découvrez, valorisez et connectez les talents du Cameroun avec le monde entier', en: 'Discover, valorize and connect Cameroonian talent with the world' },
   'hero.cta': { fr: 'Explorer les Talents', en: 'Explore Talents' },
@@ -101,7 +102,7 @@ const translations: Translations = {
 
   // Success Stories
   'success.title': { fr: 'Histoires de Réussite', en: 'Success Stories' },
-  'success.subtitle': { fr: 'Des Lions Indomptables qui ont conquis le monde du football', en: 'Indomitable Lions who conquered the football world' },
+  'success.subtitle': { fr: 'Les Ndolés qui ont conquis le monde du football', en: 'The Ndolés who conquered the football world' },
   'success.readMore': { fr: 'Lire Plus', en: 'Read More' },
 
   // News

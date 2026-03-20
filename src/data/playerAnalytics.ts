@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from "@/lib/supabase";
 
 export interface RatingPoint {
   year: number;
@@ -57,23 +57,28 @@ export interface PlayerAnalyticsData {
   rating_history: RatingPoint[];
 }
 
-export async function fetchPlayerAnalytics(playerId: string): Promise<PlayerAnalyticsData | null> {
+export async function fetchPlayerAnalytics(
+  playerId: string,
+): Promise<PlayerAnalyticsData | null> {
   try {
-    const { data, error } = await supabase.functions.invoke('player-analytics', {
-      body: {
-        action: 'get_player_analytics',
-        player_id: playerId,
+    const { data, error } = await supabase.functions.invoke(
+      "player-analytics",
+      {
+        body: {
+          action: "get_player_analytics",
+          player_id: playerId,
+        },
       },
-    });
+    );
 
     if (error || !data) {
-      console.error('Error fetching player analytics:', error);
+      console.error("Error fetching player analytics:", error);
       return null;
     }
 
     return data as PlayerAnalyticsData;
   } catch (err) {
-    console.error('Error fetching player analytics:', err);
+    console.error("Error fetching player analytics:", err);
     return null;
   }
 }
@@ -89,19 +94,22 @@ export async function addPlayerComment(params: {
   isEndorsement?: boolean;
 }): Promise<PlayerComment | null> {
   try {
-    const { data, error } = await supabase.functions.invoke('player-analytics', {
-      body: {
-        action: 'add_comment',
-        player_id: params.playerId,
-        author_name: params.authorName,
-        author_role: params.authorRole || 'Scout',
-        author_email: params.authorEmail || null,
-        user_id: params.userId || null,
-        content: params.content,
-        rating: params.rating || null,
-        is_endorsement: params.isEndorsement || false,
+    const { data, error } = await supabase.functions.invoke(
+      "player-analytics",
+      {
+        body: {
+          action: "add_comment",
+          player_id: params.playerId,
+          author_name: params.authorName,
+          author_role: params.authorRole || "Scout",
+          author_email: params.authorEmail || null,
+          user_id: params.userId || null,
+          content: params.content,
+          rating: params.rating || null,
+          is_endorsement: params.isEndorsement || false,
+        },
       },
-    });
+    );
 
     if (error || !data) return null;
     return data.comment;
@@ -112,12 +120,15 @@ export async function addPlayerComment(params: {
 
 export async function deletePlayerComment(commentId: string): Promise<boolean> {
   try {
-    const { data, error } = await supabase.functions.invoke('player-analytics', {
-      body: {
-        action: 'delete_comment',
-        comment_id: commentId,
+    const { data, error } = await supabase.functions.invoke(
+      "player-analytics",
+      {
+        body: {
+          action: "delete_comment",
+          comment_id: commentId,
+        },
       },
-    });
+    );
     return !error && data?.success;
   } catch {
     return false;
@@ -133,7 +144,7 @@ export function formatRelativeDate(dateStr: string): string {
   const diffHours = Math.floor(diffMs / 3600000);
   const diffDays = Math.floor(diffMs / 86400000);
 
-  if (diffMins < 1) return 'Just now';
+  if (diffMins < 1) return "Just now";
   if (diffMins < 60) return `${diffMins}m ago`;
   if (diffHours < 24) return `${diffHours}h ago`;
   if (diffDays < 7) return `${diffDays}d ago`;

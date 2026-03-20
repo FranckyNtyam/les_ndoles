@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from "@/lib/supabase";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 export interface PlayerSubmission {
@@ -57,9 +57,8 @@ export interface DbPlayer {
   created_at: string;
 }
 
-
 // ─── Admin Auth ──────────────────────────────────────────────────────────────
-const ADMIN_PASSWORD = 'LesNdolés2026!';
+const ADMIN_PASSWORD = "LesNdolés2026!";
 
 export function checkAdminPassword(password: string): boolean {
   return password === ADMIN_PASSWORD;
@@ -67,9 +66,9 @@ export function checkAdminPassword(password: string): boolean {
 
 export async function checkAdminEmail(email: string): Promise<boolean> {
   const { data, error } = await supabase
-    .from('admins')
-    .select('id')
-    .eq('email', email)
+    .from("admins")
+    .select("id")
+    .eq("email", email)
     .maybeSingle();
   return !error && !!data;
 }
@@ -77,95 +76,91 @@ export async function checkAdminEmail(email: string): Promise<boolean> {
 // ─── Player Submissions ─────────────────────────────────────────────────────
 export async function fetchSubmissions(): Promise<PlayerSubmission[]> {
   const { data, error } = await supabase
-    .from('player_submissions')
-    .select('*')
-    .order('created_at', { ascending: false });
+    .from("player_submissions")
+    .select("*")
+    .order("created_at", { ascending: false });
   if (error || !data) return [];
   return data;
 }
 
 export async function updateSubmissionStatus(
   id: string,
-  status: 'approved' | 'rejected'
+  status: "approved" | "rejected",
 ): Promise<boolean> {
   const { error } = await supabase
-    .from('player_submissions')
+    .from("player_submissions")
     .update({ status })
-    .eq('id', id);
+    .eq("id", id);
   return !error;
 }
 
 export async function deleteSubmission(id: string): Promise<boolean> {
   const { error } = await supabase
-    .from('player_submissions')
+    .from("player_submissions")
     .delete()
-    .eq('id', id);
+    .eq("id", id);
   return !error;
 }
 
 // ─── Players ─────────────────────────────────────────────────────────────────
 export async function fetchAllPlayers(): Promise<DbPlayer[]> {
   const { data, error } = await supabase
-    .from('players')
-    .select('*')
-    .order('name', { ascending: true });
+    .from("players")
+    .select("*")
+    .order("name", { ascending: true });
   if (error || !data) return [];
   return data;
 }
 
 export async function updatePlayer(
   id: string,
-  updates: Partial<DbPlayer>
+  updates: Partial<DbPlayer>,
 ): Promise<boolean> {
-  const { error } = await supabase
-    .from('players')
-    .update(updates)
-    .eq('id', id);
+  const { error } = await supabase.from("players").update(updates).eq("id", id);
   return !error;
 }
 
 export async function deletePlayer(id: string): Promise<boolean> {
-  const { error } = await supabase
-    .from('players')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from("players").delete().eq("id", id);
   return !error;
 }
 
 export async function createPlayerFromSubmission(
-  submission: PlayerSubmission
+  submission: PlayerSubmission,
 ): Promise<boolean> {
   const positionFrMap: Record<string, string> = {
-    Forward: 'Attaquant',
-    Midfielder: 'Milieu',
-    Defender: 'Défenseur',
-    Goalkeeper: 'Gardien',
+    Forward: "Attaquant",
+    Midfielder: "Milieu",
+    Defender: "Défenseur",
+    Goalkeeper: "Gardien",
   };
   const regionKeyMap: Record<string, string> = {
-    Centre: 'centre',
-    Littoral: 'littoral',
-    Ouest: 'ouest',
-    'Sud-Ouest': 'sudouest',
-    'Nord-Ouest': 'nordouest',
-    Nord: 'nord',
-    'Extrême-Nord': 'extreme_nord',
-    Adamaoua: 'adamaoua',
-    Est: 'est',
-    Sud: 'sud',
+    Centre: "centre",
+    Littoral: "littoral",
+    Ouest: "ouest",
+    "Sud-Ouest": "sudouest",
+    "Nord-Ouest": "nordouest",
+    Nord: "nord",
+    "Extrême-Nord": "extreme_nord",
+    Adamaoua: "adamaoua",
+    Est: "est",
+    Sud: "sud",
   };
 
-  const { error } = await supabase.from('players').insert({
+  const { error } = await supabase.from("players").insert({
     name: submission.name,
     position: submission.position,
     position_fr: positionFrMap[submission.position] || submission.position,
     age: submission.age,
-    club: 'Non affilié',
+    club: "Non affilié",
     region: submission.region,
-    region_key: regionKeyMap[submission.region] || submission.region.toLowerCase(),
-    image: 'https://d64gsuwffb70l.cloudfront.net/69a0c0906c293dc787eb0105_1772142849934_ea1c948d.jpg',
-    height: '1.78m',
-    weight: '72kg',
-    foot: 'Right',
+    region_key:
+      regionKeyMap[submission.region] || submission.region.toLowerCase(),
+    image:
+      "https://d64gsuwffb70l.cloudfront.net/69a0c0906c293dc787eb0105_1772142849934_ea1c948d.jpg",
+    height: "1.78m",
+    weight: "72kg",
+    foot: "Right",
     goals: 0,
     assists: 0,
     matches: 0,
@@ -179,7 +174,7 @@ export async function createPlayerFromSubmission(
     career: JSON.stringify([]),
     bio: `Promising ${submission.position.toLowerCase()} from ${submission.region}.`,
     bio_fr: `${positionFrMap[submission.position] || submission.position} prometteur de la région ${submission.region}.`,
-    status: 'active',
+    status: "active",
   });
   return !error;
 }
@@ -187,29 +182,29 @@ export async function createPlayerFromSubmission(
 // ─── Scout Inquiries ─────────────────────────────────────────────────────────
 export async function fetchInquiries(): Promise<ScoutInquiry[]> {
   const { data, error } = await supabase
-    .from('scout_inquiries')
-    .select('*')
-    .order('created_at', { ascending: false });
+    .from("scout_inquiries")
+    .select("*")
+    .order("created_at", { ascending: false });
   if (error || !data) return [];
   return data;
 }
 
 export async function updateInquiryStatus(
   id: string,
-  status: string
+  status: string,
 ): Promise<boolean> {
   const { error } = await supabase
-    .from('scout_inquiries')
+    .from("scout_inquiries")
     .update({ status })
-    .eq('id', id);
+    .eq("id", id);
   return !error;
 }
 
 export async function deleteInquiry(id: string): Promise<boolean> {
   const { error } = await supabase
-    .from('scout_inquiries')
+    .from("scout_inquiries")
     .delete()
-    .eq('id', id);
+    .eq("id", id);
   return !error;
 }
 
@@ -222,9 +217,9 @@ export async function fetchDashboardStats(): Promise<{
   pendingInquiries: number;
 }> {
   const [playersRes, subsRes, inqRes] = await Promise.all([
-    supabase.from('players').select('id', { count: 'exact', head: true }),
-    supabase.from('player_submissions').select('id, status'),
-    supabase.from('scout_inquiries').select('id, status'),
+    supabase.from("players").select("id", { count: "exact", head: true }),
+    supabase.from("player_submissions").select("id, status"),
+    supabase.from("scout_inquiries").select("id, status"),
   ]);
 
   const totalPlayers = playersRes.count || 0;
@@ -234,8 +229,11 @@ export async function fetchDashboardStats(): Promise<{
   return {
     totalPlayers,
     totalSubmissions: submissions.length,
-    pendingSubmissions: submissions.filter((s: any) => s.status === 'pending').length,
+    pendingSubmissions: submissions.filter((s: any) => s.status === "pending")
+      .length,
     totalInquiries: inquiries.length,
-    pendingInquiries: inquiries.filter((i: any) => !i.status || i.status === 'pending').length,
+    pendingInquiries: inquiries.filter(
+      (i: any) => !i.status || i.status === "pending",
+    ).length,
   };
 }

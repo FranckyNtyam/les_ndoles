@@ -1,6 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -90,7 +88,7 @@
 @layer typography {
   .prose {
     /* options typographiques simples ou laissez le plugin Typhography gérer */
-    color: theme('colors.gray.700');
+    color: theme("colors.gray.700");
   }
 }
 
@@ -98,7 +96,7 @@
   * {
     /* @apply border; */
   }
- 
+
   html {
     scroll-behavior: smooth;
   }
@@ -107,7 +105,8 @@
     @apply bg-[#0a1a0f] text-white font-sans dark:bg-[#0a1a0f] dark:text-white;
   }
 
-  pre, code {
+  pre,
+  code {
     @apply font-mono;
   }
 
@@ -133,7 +132,6 @@
   }
 }
 
-
 .markdown-editor {
   @apply font-mono text-base leading-relaxed;
 }
@@ -156,7 +154,7 @@
 .markdown-preview h4,
 .markdown-preview h5,
 .markdown-preview h6 {
-  @apply font-sans font-semibold ;
+  @apply font-sans font-semibold;
 }
 
 .markdown-preview ul,

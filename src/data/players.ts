@@ -1,9 +1,9 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from "@/lib/supabase";
 
 export interface Player {
   id: string;
   name: string;
-  position: 'Forward' | 'Midfielder' | 'Defender' | 'Goalkeeper';
+  position: "Forward" | "Midfielder" | "Defender" | "Goalkeeper";
   positionFr: string;
   age: number;
   club: string;
@@ -28,7 +28,6 @@ export interface Player {
   bioFr: string;
   videoUrl: string | null;
 }
-
 
 // Map DB snake_case rows to camelCase Player interface
 function mapDbPlayer(row: any): Player {
@@ -55,23 +54,25 @@ function mapDbPlayer(row: any): Player {
     dribbling: row.dribbling,
     defense: row.defense,
     stamina: row.stamina,
-    career: typeof row.career === 'string' ? JSON.parse(row.career) : (row.career || []),
+    career:
+      typeof row.career === "string"
+        ? JSON.parse(row.career)
+        : row.career || [],
     bio: row.bio,
     bioFr: row.bio_fr,
     videoUrl: row.video_url || null,
   };
 }
 
-
 // Fetch all approved players from Supabase
 export async function fetchPlayers(): Promise<Player[]> {
   const { data, error } = await supabase
-    .from('players')
-    .select('*')
-    .order('rating', { ascending: false });
+    .from("players")
+    .select("*")
+    .order("rating", { ascending: false });
 
   if (error) {
-    console.error('Error fetching players:', error);
+    console.error("Error fetching players:", error);
     return fallbackPlayers;
   }
 
@@ -85,9 +86,9 @@ export async function fetchPlayers(): Promise<Player[]> {
 // Fetch a single player by ID
 export async function fetchPlayerById(id: string): Promise<Player | null> {
   const { data, error } = await supabase
-    .from('players')
-    .select('*')
-    .eq('id', id)
+    .from("players")
+    .select("*")
+    .eq("id", id)
     .single();
 
   if (error || !data) return null;
@@ -103,10 +104,10 @@ export async function submitInquiry(params: {
   playerId?: string;
   userId?: string;
 }): Promise<{ success: boolean; error?: string }> {
-  const { error } = await supabase.from('scout_inquiries').insert({
+  const { error } = await supabase.from("scout_inquiries").insert({
     scout_name: params.scoutName,
     scout_email: params.scoutEmail,
-    club: params.club || '',
+    club: params.club || "",
     message: params.message,
     player_id: params.playerId || null,
     user_id: params.userId || null,
@@ -125,7 +126,7 @@ export async function submitPlayerProfile(params: {
   contact: string;
   submittedBy?: string;
 }): Promise<{ success: boolean; error?: string }> {
-  const { error } = await supabase.from('player_submissions').insert({
+  const { error } = await supabase.from("player_submissions").insert({
     name: params.name,
     position: params.position,
     age: params.age,
@@ -141,28 +142,34 @@ export async function submitPlayerProfile(params: {
 // Shortlist helpers
 export async function fetchShortlist(userId: string): Promise<string[]> {
   const { data, error } = await supabase
-    .from('shortlists')
-    .select('player_id')
-    .eq('user_id', userId);
+    .from("shortlists")
+    .select("player_id")
+    .eq("user_id", userId);
 
   if (error || !data) return [];
   return data.map((row: any) => row.player_id);
 }
 
-export async function addToShortlist(userId: string, playerId: string): Promise<boolean> {
-  const { error } = await supabase.from('shortlists').insert({
+export async function addToShortlist(
+  userId: string,
+  playerId: string,
+): Promise<boolean> {
+  const { error } = await supabase.from("shortlists").insert({
     user_id: userId,
     player_id: playerId,
   });
   return !error;
 }
 
-export async function removeFromShortlist(userId: string, playerId: string): Promise<boolean> {
+export async function removeFromShortlist(
+  userId: string,
+  playerId: string,
+): Promise<boolean> {
   const { error } = await supabase
-    .from('shortlists')
+    .from("shortlists")
     .delete()
-    .eq('user_id', userId)
-    .eq('player_id', playerId);
+    .eq("user_id", userId)
+    .eq("player_id", playerId);
   return !error;
 }
 
@@ -190,33 +197,71 @@ const fallbackPlayers: Player[] = [
   //   bioFr: 'Un attaquant prolifique avec une vitesse exceptionnelle et une finition clinique.',
   //   videoUrl: null,
   // },
-   {
-    id: 'fallback-1',
-    name: 'Ntyam Francky',
-    position: 'Forward',
-    positionFr: 'Attaquant',
+  {
+    id: "fallback-1",
+    name: "Ntyam Francky",
+    position: "Forward",
+    positionFr: "Attaquant",
     age: 22,
-    club: 'Coton Sport FC',
-    region: 'Centre',
-    regionKey: 'centre',
-    image: 'https://media.licdn.com/dms/image/v2/C4D03AQGz7VwRr5oHBw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1621116098158?e=1774483200&v=beta&t=CHvIrslEIYuDalIQT708gRp2IwlcUcLwxuokhDfztOk',
-    height: '1.82m', weight: '76kg', foot: 'Right',
-    goals: 18, assists: 7, matches: 32, rating: 8.2,
-    speed: 88, shooting: 85, passing: 72, dribbling: 84, defense: 35, stamina: 82,
+    club: "Coton Sport FC",
+    region: "Centre",
+    regionKey: "centre",
+    image:
+      "https://media.licdn.com/dms/image/v2/C4D03AQGz7VwRr5oHBw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1621116098158?e=1774483200&v=beta&t=CHvIrslEIYuDalIQT708gRp2IwlcUcLwxuokhDfztOk",
+    height: "1.82m",
+    weight: "76kg",
+    foot: "Right",
+    goals: 18,
+    assists: 7,
+    matches: 32,
+    rating: 8.2,
+    speed: 88,
+    shooting: 85,
+    passing: 72,
+    dribbling: 84,
+    defense: 35,
+    stamina: 82,
     career: [
-      { year: '2022', event: 'Joined Coton Sport FC', eventFr: 'Rejoint Coton Sport FC' },
-      { year: '2023', event: 'Top scorer of Elite One', eventFr: 'Meilleur buteur de l\'Elite One' },
-      { year: '2024', event: 'Called up to national team', eventFr: 'Convoqué en équipe nationale' },
+      {
+        year: "2022",
+        event: "Joined Coton Sport FC",
+        eventFr: "Rejoint Coton Sport FC",
+      },
+      {
+        year: "2023",
+        event: "Top scorer of Elite One",
+        eventFr: "Meilleur buteur de l'Elite One",
+      },
+      {
+        year: "2024",
+        event: "Called up to national team",
+        eventFr: "Convoqué en équipe nationale",
+      },
     ],
-    bio: 'A prolific striker with exceptional pace and clinical finishing ability.',
-    bioFr: 'Un attaquant prolifique avec une vitesse exceptionnelle et une finition clinique.',
+    bio: "A prolific striker with exceptional pace and clinical finishing ability.",
+    bioFr:
+      "Un attaquant prolifique avec une vitesse exceptionnelle et une finition clinique.",
     videoUrl: null,
   },
 ];
 
-
-export const positions = ['All', 'Forward', 'Midfielder', 'Defender', 'Goalkeeper'] as const;
+export const positions = [
+  "All",
+  "Forward",
+  "Midfielder",
+  "Defender",
+  "Goalkeeper",
+] as const;
 export const regions = [
-  'All', 'Centre', 'Littoral', 'Ouest', 'Sud-Ouest', 'Nord-Ouest',
-  'Nord', 'Extrême-Nord', 'Adamaoua', 'Est', 'Sud'
+  "All",
+  "Centre",
+  "Littoral",
+  "Ouest",
+  "Sud-Ouest",
+  "Nord-Ouest",
+  "Nord",
+  "Extrême-Nord",
+  "Adamaoua",
+  "Est",
+  "Sud",
 ] as const;

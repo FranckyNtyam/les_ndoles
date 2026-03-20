@@ -8,6 +8,7 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
+    "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{html,json,js,ts,css}\"",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -47,11 +48,13 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
+    "format": "^0.2.2",
     "highlight.js": "^11.9.0",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
     "marked": "^12.0.1",
     "next-themes": "^0.3.0",
+    "prettier": "^3.8.1",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
