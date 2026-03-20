@@ -168,16 +168,38 @@ export async function removeFromShortlist(userId: string, playerId: string): Pro
 
 // Fallback data in case DB is unavailable
 const fallbackPlayers: Player[] = [
-  {
+  //  {
+  //   id: 'fallback-1',
+  //   name: 'Jean-Pierre Mbarga',
+  //   position: 'Forward',
+  //   positionFr: 'Attaquant',
+  //   age: 22,
+  //   club: 'Coton Sport FC',
+  //   region: 'Centre',
+  //   regionKey: 'centre',
+  //   image: 'https://d64gsuwffb70l.cloudfront.net/69a0c0906c293dc787eb0105_1772142849934_ea1c948d.jpg',
+  //   height: '1.82m', weight: '76kg', foot: 'Right',
+  //   goals: 18, assists: 7, matches: 32, rating: 8.2,
+  //   speed: 88, shooting: 85, passing: 72, dribbling: 84, defense: 35, stamina: 82,
+  //   career: [
+  //     { year: '2022', event: 'Joined Coton Sport FC', eventFr: 'Rejoint Coton Sport FC' },
+  //     { year: '2023', event: 'Top scorer of Elite One', eventFr: 'Meilleur buteur de l\'Elite One' },
+  //     { year: '2024', event: 'Called up to national team', eventFr: 'Convoqué en équipe nationale' },
+  //   ],
+  //   bio: 'A prolific striker with exceptional pace and clinical finishing ability.',
+  //   bioFr: 'Un attaquant prolifique avec une vitesse exceptionnelle et une finition clinique.',
+  //   videoUrl: null,
+  // },
+   {
     id: 'fallback-1',
-    name: 'Jean-Pierre Mbarga',
+    name: 'Ntyam Francky',
     position: 'Forward',
     positionFr: 'Attaquant',
     age: 22,
     club: 'Coton Sport FC',
     region: 'Centre',
     regionKey: 'centre',
-    image: 'https://d64gsuwffb70l.cloudfront.net/69a0c0906c293dc787eb0105_1772142849934_ea1c948d.jpg',
+    image: 'https://media.licdn.com/dms/image/v2/C4D03AQGz7VwRr5oHBw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1621116098158?e=1774483200&v=beta&t=CHvIrslEIYuDalIQT708gRp2IwlcUcLwxuokhDfztOk',
     height: '1.82m', weight: '76kg', foot: 'Right',
     goals: 18, assists: 7, matches: 32, rating: 8.2,
     speed: 88, shooting: 85, passing: 72, dribbling: 84, defense: 35, stamina: 82,
